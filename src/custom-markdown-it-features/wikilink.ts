@@ -57,12 +57,15 @@ export default (md: MarkdownIt, config: MarkdownEngineConfig) => {
     }
 
     const splits = content.split("|");
-    const linkText = splits[0].trim();
-    const wikiLink =
-      splits.length === 2
-        ? `${splits[1].trim()}${config.wikiLinkFileExtension}`
-        : `${linkText.replace(/\s/g, "_")}${config.wikiLinkFileExtension}`;
-
-    return `<a href="${wikiLink}">${linkText}</a>`;
+    if (splits.length === 1) {
+      const wikiLink = `${splits[0].trim()}${config.wikiLinkFileExtension}`
+      const linkText = splits[0].trim();
+      return `<a href="${wikiLink}">${linkText}</a>`;
+    }
+    else {
+      const wikiLink = `${splits[0].trim()}${config.wikiLinkFileExtension}`
+      const linkText = splits[1].trim();
+      return `<a href="${wikiLink}">${linkText}</a>`;
+    }
   };
 };
